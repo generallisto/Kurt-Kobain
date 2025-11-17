@@ -32,12 +32,37 @@
             min-height: 100vh;
             font-family: 'Rajdhani', sans-serif;
             position: relative;
+            scroll-behavior: smooth;
         }
 
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        .rotating-gradient {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                #0a0a0a 0%,
+                #1a0a0a 25%,
+                #450a0a 50%,
+                #8b0000 75%,
+                #0a0a0a 100%
+            );
+            animation: rotate 30s linear infinite;
+            z-index: -2;
+            opacity: 0.7;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .noise-overlay {
@@ -534,11 +559,7 @@
             color: var(--text-secondary);
         }
 
-        /* Анимация плавного перехода */
-        .smooth-scroll {
-            scroll-behavior: smooth;
-        }
-
+        /* Адаптивность */
         @media (max-width: 768px) {
             h1 {
                 font-size: 3rem;
@@ -592,7 +613,8 @@
         }
     </style>
 </head>
-<body class="smooth-scroll">
+<body>
+    <div class="rotating-gradient"></div>
     <div class="noise-overlay"></div>
     
     <div class="container">
@@ -704,21 +726,21 @@
 
         <section class="photo-gallery">
             <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Абердин" class="photo-img">
+                <img src="ad70a875ca1673daf08a912ff84fe98b.jpg" alt="Абердин" class="photo-img">
                 <div class="photo-info">
                     <div class="photo-title">Абердин, 1970-е</div>
                     <div class="photo-description">Промышленный городок, где вырос Курт Кобейн</div>
                 </div>
             </div>
             <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1562565659-5f59dd13b011?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Школьные годы" class="photo-img">
+                <img src="d7a97b6ee20821573c482e4ea3e1b130.jpg" alt="Школьные годы" class="photo-img">
                 <div class="photo-info">
                     <div class="photo-title">Школьные годы</div>
                     <div class="photo-description">Чувствительный подросток в мире агрессии</div>
                 </div>
             </div>
             <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1511735111819-9a3f7709049c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Ранние выступления" class="photo-img">
+                <img src="hq-live-93-12-13b_40.jpg" alt="Ранние выступления" class="photo-img">
                 <div class="photo-info">
                     <div class="photo-title">Ранние выступления</div>
                     <div class="photo-description">Первые шаги Nirvana на сцене</div>
