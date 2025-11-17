@@ -743,6 +743,27 @@
             line-height: 1.6;
         }
 
+        /* Стили для запасных изображений */
+        .photo-fallback {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, var(--dark-red), var(--red));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            border-bottom: 2px solid rgba(255, 61, 0, 0.3);
+        }
+
+        .photo-fallback i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--orange), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .checklist {
             background: linear-gradient(135deg, rgba(10, 10, 10, 0.9), rgba(5, 5, 5, 0.95));
             border-radius: 25px;
@@ -1006,21 +1027,30 @@
 
         <section class="photo-gallery">
             <div class="photo-card">
-                <img src="ad70a875ca1673daf08a912ff84fe98b.jpg" alt="Абердин" class="photo-img">
+                <div class="photo-fallback">
+                    <i class="fas fa-city"></i>
+                    <span>Абердин, 1970-е</span>
+                </div>
                 <div class="photo-info">
                     <div class="photo-title">Абердин, 1970-е</div>
                     <div class="photo-description">Промышленный городок, где вырос Курт Кобейн</div>
                 </div>
             </div>
             <div class="photo-card">
-                <img src="d7a97b6ee20821573c482e4ea3e1b130.jpg" alt="Школьные годы" class="photo-img">
+                <div class="photo-fallback">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Школьные годы</span>
+                </div>
                 <div class="photo-info">
                     <div class="photo-title">Школьные годы</div>
                     <div class="photo-description">Чувствительный подросток в мире агрессии</div>
                 </div>
             </div>
             <div class="photo-card">
-                <img src="hq-live-93-12-13b_40.jpg" alt="Ранние выступления" class="photo-img">
+                <div class="photo-fallback">
+                    <i class="fas fa-drum"></i>
+                    <span>Ранние выступления</span>
+                </div>
                 <div class="photo-info">
                     <div class="photo-title">Ранние выступления</div>
                     <div class="photo-description">Первые шаги Nirvana на сцене</div>
@@ -1075,7 +1105,6 @@
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
-                // Случайные свойства
                 const size = Math.random() * 3 + 1;
                 const left = Math.random() * 100;
                 const delay = Math.random() * 8;
@@ -1163,10 +1192,46 @@
             setTimeout(checkVisibility, 100);
         }
 
+        // Загрузка фотографий
+        function loadPhotos() {
+            const photos = [
+                { src: 'ad70a875ca1673daf08a912ff84fe98b.jpg', alt: 'Абердин', title: 'Абердин, 1970-е', desc: 'Промышленный городок, где вырос Курт Кобейн' },
+                { src: 'd7a97b6ee20821573c482e4ea3e1b130.jpg', alt: 'Школьные годы', title: 'Школьные годы', desc: 'Чувствительный подросток в мире агрессии' },
+                { src: 'hq-live-93-12-13b_40.jpg', alt: 'Ранние выступления', title: 'Ранние выступления', desc: 'Первые шаги Nirvana на сцене' }
+            ];
+
+            const photoCards = document.querySelectorAll('.photo-card');
+            
+            photoCards.forEach((card, index) => {
+                if (index < photos.length) {
+                    const photo = photos[index];
+                    const img = document.createElement('img');
+                    img.src = photo.src;
+                    img.alt = photo.alt;
+                    img.className = 'photo-img';
+                    img.onerror = function() {
+                        // Если фото не загрузилось, оставляем fallback
+                        this.style.display = 'none';
+                        card.querySelector('.photo-fallback').style.display = 'flex';
+                    };
+                    
+                    // Заменяем fallback на фото
+                    const fallback = card.querySelector('.photo-fallback');
+                    card.insertBefore(img, fallback);
+                    fallback.style.display = 'none';
+                    
+                    // Обновляем заголовки
+                    card.querySelector('.photo-title').textContent = photo.title;
+                    card.querySelector('.photo-description').textContent = photo.desc;
+                }
+            });
+        }
+
         // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
             initScrollAnimations();
+            loadPhotos();
         });
     </script>
 </body>
